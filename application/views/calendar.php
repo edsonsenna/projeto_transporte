@@ -38,9 +38,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       editable: false,
       eventLimit: true, // allow "more" link when too many events
       dayClick: function(date, jsEvent, view) {
-
-        $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY'));
-        $('#requisitaTransporte').modal('show');
+         // $(document).ready(function(){
+            $.ajax({
+              type: "POST",
+              url: "<?php echo base_url();?>index.php/system/verifica_disponibilidade?ajax=true",
+              data: {data: date.format('YYYY-MM-DD')},
+              dataType: 'json',
+              success: function(data)
+              {
+              if(data.result == false){
+                $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
+                $('#requisitaTransporte').modal('show');
+              }
+              else{
+                  alert(data.message);
+              }
+            }
+          });
+        //});
+       
         //alert('Clicked on: ' + date.format());
 
       },
@@ -135,12 +151,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Email address</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+              <label for="doc">Documento Requisitante</label>
+              <input type="number" class="form-control" id="doc" placeholder="12344566" name="doc">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="nome">Nome Requisitante</label>
+              <input type="text" class="form-control" id="nome" placeholder="Fulano de Tal" name="nome">
+            </div>
+            <div class="form-group">
+              <label for="veiculo">Veículo</label>
+              <select class="form-control" id="veiculo" name="veiculo">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>

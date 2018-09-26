@@ -7,7 +7,7 @@ $this->load->view('commons/side_menu');
 <div class="col-md-8">
     <h3><?php if(isset($message_error)) { echo $message_error;}?></h3>
     <h3><?php if(isset($message_fdbd)) { echo $message_fdbd;}?></h3>
-    <form action="<?php echo base_url()?>index.php/System/cria_motorista" method="POST">
+    <form action="<?php echo base_url()?>index.php/Motorista/cria_motorista" method="POST">
             <h3>Cadastro de Motorista</h3>
             <div class="form-group">
                 <label for="nome">Nome</label>

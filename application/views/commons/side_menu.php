@@ -26,9 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							  <i class="fa fa-car fa-lg"></i> Veículos <span class="arrow"></span>
 							</li>
 							<ul class="sub-menu collapse" id="admVeiculos">
-								<a href="<?php echo base_url()?>index.php/System/cadastrar_veiculo"><li>Cadastrar</li></a>
+								<a href="<?php echo base_url()?>index.php/Veiculo/cadastrar_veiculo"><li>Cadastrar</li></a>
 								<li>Manutenção</li>
-								<a href="<?php echo base_url()?>index.php/System/listar_veiculos"><li>Buscar/Alterar</li></a>
+								<a href="<?php echo base_url()?>index.php/Veiculo"><li>Buscar/Alterar</li></a>
 							</ul>
 
 						
@@ -37,16 +37,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							  <i class="fa fa-car fa-lg"></i> Servidores <span class="arrow"></span>
 							</li>
 							<ul class="sub-menu collapse" id="admServidor">
-								<a href="<?php echo base_url()?>index.php/System/cadastro_usuario"><li>Cadastrar</li></a>
-								<a href="<?php echo base_url()?>index.php/System/listar_usuarios"><li>Buscar/Alterar</li></a>
+								<a href="<?php echo base_url()?>index.php/Usuario/cadastro_usuario"><li>Cadastrar</li></a>
+								<a href="<?php echo base_url()?>index.php/Usuario"><li>Buscar/Alterar</li></a>
 							</ul>
 							
 							<li data-toggle="collapse" data-target="#admMotorista" class="collapsed">
 							  <i class="fa fa-car fa-lg"></i> Motoristas <span class="arrow"></span>
 							</li>
 							<ul class="sub-menu collapse" id="admMotorista">
-								<a href="<?php echo base_url()?>index.php/System/criar_motorista"><li>Cadastrar</li></a>
-								<a href="<?php echo base_url()?>index.php/System/listar_motoristas"><li>Buscar/Alterar</li></a>
+								<a href="<?php echo base_url()?>index.php/Motorista/criar_motorista"><li>Cadastrar</li></a>
+								<a href="<?php echo base_url()?>index.php/Motorista"><li>Buscar/Alterar</li></a>
 							</ul>
 							
 							<li data-toggle="collapse" data-target="#admRelatorio" class="collapsed">

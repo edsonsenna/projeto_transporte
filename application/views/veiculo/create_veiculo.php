@@ -6,7 +6,7 @@ echo $message_error;
 
 ?>
 <div class="col-md-6">
-    <form action="<?php echo base_url()?>index.php/System/cadastro_veiculo" method="POST">
+    <form action="<?php echo base_url()?>index.php/Veiculo/cadastro_veiculo" method="POST">
         <h3>Cadastro de Veículos</h3>
         <div class="form-group">
             <label for="modelo">Modelo do Veículo</label>

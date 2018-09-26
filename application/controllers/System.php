@@ -117,188 +117,7 @@ class System extends CI_Controller {
         $this->load->view('viagem/teste_requisitar_viagem', $dados);
     }
 
-    public function listar_veiculos(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Veiculos_model');
-        $dados['veiculos'] = $this->Veiculos_model->get();
-        $this->load->view('veiculo/listar_veiculos', $dados);
-    }
-
-    public function cadastrar_veiculo(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Veiculos_model');
-        $dados['categorias'] = $this->Veiculos_model->getCategorias();
-        $dados['message_error'] = '';
-        $this->load->view('veiculo/create_veiculo', $dados);
-    }
-
-    public function cadastro_veiculo(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->library('form_validation');
-		$this->load->model('Veiculos_model');
-		$regras = array(
-			array(
-				'field' => 'modelo',
-				'label' => 'Modelo',
-				'rules' => 'required'
-			),
-			array(
-				'field' => 'fabricante',
-				'label' => 'Fabricante',
-				'rules' => 'required'
-			),
-			array(
-				'field' => 'ano',
-				'label' => 'Ano',
-				'rules' => 'required|number'
-            ),
-            array(
-				'field' => 'num_pass',
-				'label' => 'Número de Passageiros',
-				'rules' => 'required|number'
-            ),
-            array(
-				'field' => 'categoria',
-				'label' => 'Categoria',
-				'rules' => 'required|number'
-			)
-			
-        );
-        
-        $this->form_validation->set_rules($regras);
-
-		if($this->form_validation->run() == FALSE)
-		{
-            $data['message_error'] = validation_errors('<span class="error">', '</span>');
-
-			$this->load->view('veiculo/create_veiculo', $data);
-        }
-        else
-        {
-            $dados = array(
-				"nome_veiculo" => $this->input->post('modelo'),
-				"marca_veiculo" => $this->input->post('fabricante'),
-				"placa_veiculo" => $this->input->post('placa'),
-				"cat_veiculo" => $this->input->post('categoria'),
-				"qtd_pas_veiculo" => $this->input->post('num_pass')
-            );
-            
-            if($this->Veiculos_model->add('veiculos', $dados)){
-                $data['message_error'] = '<span class="error"> Veículos cadastrado com sucesso! </span>';
-                redirect('System/cadastrar_veiculo', $data);
-            }
-            else
-            {
-                $data['message_error'] = '<span class="error"> Falha ao cadastrar veículo no BD! </span>';
-                redirect('System/cadastrar_veiculo', $data);
-            }
-        }
-    }
-
-    public function cria_motorista()
-    {
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Veiculos_model');
-        $data['categorias'] = $this->Veiculos_model->getCategorias();
-        $this->load->library('form_validation');
-		$this->load->model('Motoristas_model');
-		$regras = array(
-			array(
-				'field' => 'nome',
-				'label' => 'Nome',
-				'rules' => 'required'
-			),
-			array(
-				'field' => 'num_doc',
-				'label' => 'Numero do Documento',
-				'rules' => 'required'
-			),
-			array(
-				'field' => 'tel',
-				'label' => 'Telefone',
-				'rules' => 'required'
-            ),
-            array(
-				'field' => 'cat_doc',
-				'label' => 'Categoria',
-				'rules' => 'required'
-            )
-			
-        );
-
-
-        $this->form_validation->set_rules($regras);
-
-		if($this->form_validation->run() == FALSE)
-		{
-            $data['message_error'] = validation_errors('<span class="error">', '</span>');
-            
-            $this->load->view('motorista/create_motorista', $data);
-            
-        }
-        else
-        {
-            $dados = array(
-				"nome_motorista" => $this->input->post('nome'),
-				"documento_motorista" => $this->input->post('num_doc'),
-				"cat_motorista" => $this->input->post('cat_doc'),
-				"tel_motorista" => $this->input->post('tel'),
-            );
-            
-            if($this->Motoristas_model->add('motorista', $dados)){
-                $data['message_error'] = '<div class="alert alert-success alert-dismissible show" role="alert">
-                Motorista cadastrado com sucesso no BD!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>';
-                $this->load->view('motorista/create_motorista', $data);
-            }
-            else
-            {
-                $data['message_error'] = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Falha ao cadastro Motorista no BD!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>';
-                $this->load->view('motorista/create_motorista', $data);
-            }
-        }
-
-
-    }
-
-
-    public function criar_motorista()
-    {
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Veiculos_model');
-        $dados['categorias'] = $this->Veiculos_model->getCategorias();
-        $this->load->view('motorista/create_motorista', $dados);
-    }
-
-
-    public function listar_motoristas()
-    {
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Motoristas_model');
-        $dados['motoristas'] = $this->Motoristas_model->get();
-        $this->load->view('motorista/listar_motorista', $dados);
-    }
-
+   
 
     public function gerar_relatorio()
     {
@@ -309,6 +128,22 @@ class System extends CI_Controller {
     }
 
 
+    public function verifica_disponibilidade(){
+
+        $date = $this->input->post('data');
+        $this->load->model('Transportes_model');
+        $disponivel = $this->Transportes_model->verifica($date);
+        
+        if($disponivel == true){
+            $json = array('result' => true, 'message' => 'Já existe viagem neste dia!');
+            echo json_encode($json);
+        }else{
+            $json = array('result' => false, 'message' => $date . $disponivel);
+            echo json_encode($json);
+        }
+
+        
+    }
 
 
 
