@@ -1,0 +1,18 @@
+Necessidade de manter cadastro/login do servidor
+
+
+
+Necessidade de utilizar template de requisicao
+
+Nao
+
+Manter Cadastro / Chefias
+
+O que precisa ser assinado
+
+Geração de Relatório
+
+Geração de Novo Layout Dinamico Requisicao
+
+
+Servidor Agenta Transporte -> Transporte Aceito -> Requisita Viagem -> Chefia Aceita (Se diaria imprime) -> Felipe Arquiva (Baixa)
