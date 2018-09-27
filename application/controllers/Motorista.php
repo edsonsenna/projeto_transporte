@@ -116,6 +116,103 @@ class Motorista extends CI_Controller {
         $this->load->view('motorista/create_motorista', $dados);
     }
 
+    public function editar_motorista()
+    {
+        if((!session_id() === "") || (!$this->session->userdata('logado'))){
+            redirect('System/login');
+        }
+        if(($this->uri->segment(3)) && is_numeric($this->uri->segment(3)))
+		{
+			$id = $this->uri->segment(3);
+            $this->load->model('Motoristas_model');
+            $this->load->model('Veiculos_model');
+			$dados['categorias'] = $this->Veiculos_model->getCategorias();
+			$motorista = $this->Motoristas_model->getMotorista($id, true);
+			if($motorista)
+			{
+				$dados['motorista'] = $motorista;
+				$dados['message_error'] = '';
+                $this->load->view('Motorista/editar_motorista', $dados);
+			}
+		}
+    }
+
+    public function atualizar_motorista()
+    {
+        if((!session_id() === "") || (!$this->session->userdata('logado'))){
+            redirect('System/login');
+        }
+        $this->load->model('Veiculos_model');
+        $data['categorias'] = $this->Veiculos_model->getCategorias();
+        $this->load->library('form_validation');
+		$this->load->model('Motoristas_model');
+		$regras = array(
+			array(
+				'field' => 'nome',
+				'label' => 'Nome',
+				'rules' => 'required'
+			),
+			array(
+				'field' => 'num_doc',
+				'label' => 'Numero do Documento',
+				'rules' => 'required'
+			),
+			array(
+				'field' => 'tel',
+				'label' => 'Telefone',
+				'rules' => 'required'
+            ),
+            array(
+				'field' => 'cat_doc',
+				'label' => 'Categoria',
+				'rules' => 'required'
+            )
+			
+        );
+
+
+        $this->form_validation->set_rules($regras);
+
+		if($this->form_validation->run() == FALSE)
+		{
+            $data['message_error'] = validation_errors('<span class="error">', '</span>');
+            
+            $this->load->view('motorista/create_motorista', $data);
+            
+        }
+        else
+        {
+            $motorista = array(
+                "id_motorista" => $this->input->post('id'),
+				"nome_motorista" => $this->input->post('nome'),
+				"documento_motorista" => $this->input->post('num_doc'),
+				"cat_motorista" => $this->input->post('cat_doc'),
+				"tel_motorista" => $this->input->post('tel'),
+            );
+
+            $this->Motoristas_model->update($motorista);
+
+            redirect('Motorista');
+            
+           
+        }
+    }
+
+    public function excluir_motorista()
+    {
+        if((!session_id() === "") || (!$this->session->userdata('logado'))){
+            redirect('System/login');
+        }
+        if(($this->uri->segment(3)) && is_numeric($this->uri->segment(3)))
+		{
+			$id = $this->uri->segment(3);
+            $this->load->model('Motoristas_model');
+            $this->Motoristas_model->excluir($id);
+            redirect('Motorista');
+			
+		}
+    }
+
 }
 
 ?>

@@ -25,14 +25,16 @@ class Usuario extends CI_Controller {
         }
         $this->load->model('Users_model');
         $dados['usuarios'] = $this->Users_model->get();
-        $this->load->view('servidor/listar_servidor', $dados);
+        $this->load->view('usuario/listar_usuario', $dados);
     }
     
     public function cadastro_usuario(){
         if((!session_id() === "") || (!$this->session->userdata('logado'))){
             redirect('System/login');
         }
-        $this->load->view('servidor/create_servidor');
+        $this->load->model('Usuarios_model');
+        $data['setores'] = $this->Usuarios_model->getSetores();
+        $this->load->view('usuario/criar_usuario', $data);
     }
 
 }

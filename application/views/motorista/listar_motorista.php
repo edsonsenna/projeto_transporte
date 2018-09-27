@@ -40,8 +40,8 @@ $this->load->view('commons/side_menu');
                                 <td><?php echo $motorista->documento_motorista?></td>
                                 <td><?php echo $motorista->data_cadastro_motorista?></td>
                                 <td><?php echo $motorista->tel_motorista?></td>
-                                <td><a href="alterarMotorista.html">Editar</a></td>
-                                <td><a href="" onclick="confirm('Deseja excluir o(a) motorista cadastrado?');">Excluir</a></td>
+                                <td><a href="<?php echo base_url()?>index.php/Motorista/editar_motorista/<?php echo $motorista->id_motorista?>">Editar</a></td>
+                                <td><a href="<?php echo base_url()?>index.php/Motorista/excluir_motorista/<?php echo $motorista->id_motorista?>" onclick="confirm('Deseja excluir o(a) motorista cadastrado?');">Excluir</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>

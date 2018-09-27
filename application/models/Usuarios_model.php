@@ -1,5 +1,5 @@
 <?php
-class Users_model extends CI_Model {
+class Usuarios_model extends CI_Model {
 
     
     function __construct() {
@@ -30,5 +30,15 @@ class Users_model extends CI_Model {
         $this->db->where('login_usuario', $login);
         $this->db->limit(1);
         return $this->db->get('usuario')->row();
+    }
+
+    function getSetores($one=false){
+        $this->db->from('setor');
+
+
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
     }
 }

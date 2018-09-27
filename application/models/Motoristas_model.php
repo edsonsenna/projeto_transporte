@@ -26,6 +26,27 @@ class Motoristas_model extends CI_Model {
         return $result;
     }
 
+    function getMotorista($id, $one=false){
+        $this->db->from('motorista');
+        $this->db->where('id_motorista', $id);
+
+
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+
+    function update($motorista)
+    {
+        $this->db->replace('motorista', $motorista);
+    }
+
+    function excluir($id)
+    {
+        $this->db->delete('motorista', array('id_motorista' => $id));
+    }
+
 
 
 
