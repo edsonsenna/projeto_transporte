@@ -6,7 +6,7 @@ $this->load->view('commons/side_menu');
 
     <div class="row justify-content-center">
         <div class="col-md-4 form-login">
-            <form id="formLogin" action="<?php echo base_url()?>index.php/system/verifica_login" method="post">
+            <form id="formLogin" action="<?php echo base_url()?>index.php/System/verifica_login" method="post">
                 <div class="form-group">
                     <label for="login">Login</label>
                     <input type="text" class="form-control" value="" id="login" name="login">
@@ -44,14 +44,14 @@ $this->load->view('commons/side_menu');
                         var dados = $( form ).serialize();    
                     $.ajax({
                         type: "POST",
-                        url: "<?php echo base_url();?>index.php/system/verifica_login?ajax=true",
+                        url: "<?php echo base_url();?>index.php/System/verifica_login?ajax=true",
                         data: dados,
                         dataType: 'json',
                         success: function(data)
                         {
                         if(data.result == true){
                            // alert('Teste');
-                            window.location.href = "<?php echo base_url();?>index.php/system";
+                            window.location.href = "<?php echo base_url();?>index.php/System";
                         }
                         else{
                             alert('Login ou Senha Incorretos!');

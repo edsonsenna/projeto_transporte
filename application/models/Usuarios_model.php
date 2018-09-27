@@ -18,7 +18,9 @@ class Usuarios_model extends CI_Model {
 
     function get($one=false){
         $this->db->from('usuario');
-
+        $this->db->join('privilegio', 'usuario.priv_usuario = privilegio.id_privilegio');
+        $this->db->join('setor', 'usuario.setor_usuario = setor.id_setor');
+        $this->db->order_by('id_usuario','ASC');
 
         $query = $this->db->get();
         
@@ -40,5 +42,29 @@ class Usuarios_model extends CI_Model {
         
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
+    }
+
+    function getUsuario($id, $one=false){
+        $this->db->from('usuario');
+        $this->db->join('privilegio', 'usuario.priv_usuario = privilegio.id_privilegio');
+        $this->db->join('setor', 'usuario.setor_usuario = setor.id_setor');
+        $this->db->where('id_usuario', $id);
+        $this->db->order_by('id_usuario','ASC');
+
+
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+
+    function update($usuario)
+    {
+        $this->db->replace('usuario', $usuario);
+    }
+
+    function excluir($id)
+    {
+        $this->db->delete('usuario', array('id_usuario' => $id));
     }
 }

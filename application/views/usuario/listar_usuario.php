@@ -25,7 +25,8 @@ $this->load->view('commons/side_menu');
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Data Cadastro</th>
-                            <th>Permissão</th>	
+                            <th>Permissão</th>
+                            <th>Setor</th>	
                         </tr>
                     </thead>
                     <tbody>
@@ -34,10 +35,10 @@ $this->load->view('commons/side_menu');
                                 <td><?php echo $usuario->id_usuario ?></td>
                                 <td><?php echo $usuario->login_usuario ?></td>
                                 <td><?php echo $usuario->data_cadastro_usuario ?></td>
-                                <td><?php if($usuario->priv_usuario == 1) { echo 'Administrador'; } else { echo 'Comum';}?></td>
-                                <td><a href="alterarServidor.html">Editar</a></td>
-                                <td><a href="" onclick="confirm('Deseja excluir o servidor(a) cadastrado?');">Excluir</a></td>
-                            
+                                <td><?php echo $usuario->desc_privilegio?></td>
+                                <td><?php echo $usuario->nome_setor?></td>
+                                <td><a href="<?php echo base_url()?>index.php/Usuario/editar_usuario/<?php echo $usuario->id_usuario?>">Editar</a></td>
+                                <td><a href="<?php echo base_url()?>index.php/Usuario/excluir_usuario/<?php echo $usuario->id_usuario?>" onclick="confirm('Deseja excluir o servidor(a) cadastrado?');">Excluir</a></td>
                             </tr>
 
                         <?php } ?>

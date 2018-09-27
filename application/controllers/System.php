@@ -46,14 +46,14 @@ class System extends CI_Controller {
         $this->form_validation->set_rules('login','Login','required|trim');
         $this->form_validation->set_rules('senha','Senha','required|trim');
         if ($this->form_validation->run() == false) {
-            $json = array('result' => false, 'message' => validation_errors());
+            $json = array('result' => false, 'message' => 'teste'.validation_errors());
             echo json_encode($json);
         }
         else {
             $login = $this->input->post('login');
             $password = $this->input->post('senha');
-            $this->load->model('users_model');
-            $user = $this->users_model->check_credentials($login);
+            $this->load->model('Usuarios_model');
+            $user = $this->Usuarios_model->check_credentials($login);
 
             if($user){
 
@@ -83,21 +83,6 @@ class System extends CI_Controller {
         die();
     }
 
-    public function cadastro_usuario(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->view('servidor/create_servidor');
-    }
-    
-    public function listar_usuarios(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
-        $this->load->model('Users_model');
-        $dados['usuarios'] = $this->Users_model->get();
-        $this->load->view('servidor/listar_servidor', $dados);
-    }
 
     public function requisitar_transporte(){
         $this->load->model('Transportes_model');
@@ -121,9 +106,6 @@ class System extends CI_Controller {
 
     public function gerar_relatorio()
     {
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
         $this->load->view('relatorio/gerar_relatorio');
     }
 

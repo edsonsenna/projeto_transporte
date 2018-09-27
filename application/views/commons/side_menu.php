@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						
 							
 							<li data-toggle="collapse" data-target="#admServidor" class="collapsed">
-							  <i class="fa fa-car fa-lg"></i> Servidores <span class="arrow"></span>
+							  <i class="fa fa-car fa-lg"></i> Usuários <span class="arrow"></span>
 							</li>
 							<ul class="sub-menu collapse" id="admServidor">
 								<a href="<?php echo base_url()?>index.php/Usuario/cadastro_usuario"><li>Cadastrar</li></a>
@@ -49,12 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<a href="<?php echo base_url()?>index.php/Motorista"><li>Buscar/Alterar</li></a>
 							</ul>
 							
-							<li data-toggle="collapse" data-target="#admRelatorio" class="collapsed">
-							  <i class="fa fa-car fa-lg"></i> Relatórios <span class="arrow"></span>
-							</li>
-							<ul class="sub-menu collapse" id="admRelatorio">
-								<a href="<?php echo base_url()?>index.php/System/gerar_relatorio"><li>Gerar relatório</li></a>
-							</ul>
+						
 						</ul>
 
 						<?php }?>
@@ -69,8 +64,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<ul class="sub-menu collapse" id="servServicos">
 								<a href="<?php echo base_url()?>index.php/System/requisitar_transporte"><li>Requisitar Transporte</li></a>
 								<a href="<?php echo base_url()?>index.php/System/requisitar_viagem"><li>Requisitar Viagem</li></a>
+								<a href="<?php echo base_url()?>index.php/System/gerar_relatorio"><li>Gerar relatório</li></a>
 							</ul>
-							
 						</ul>
 
 						<li  data-toggle="collapse" data-target="#exit" class="collapsed active">
