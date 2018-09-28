@@ -33,9 +33,8 @@ class Transportes_model extends CI_Model {
 
     function verificaVeiculos($veiculos, $date){
         $query = $this->db->query(" SELECT * FROM transporte WHERE CAST(data_transporte_chegada AS DATE) = '{$date}'");
-        $vec_disponivel = array();
         foreach($query->result() as $result){
-            unset($veiculos[$result->carro_transporte]);
+            unset($veiculos[($result->carro_transporte)-1]);
         }
         return $veiculos;
     }

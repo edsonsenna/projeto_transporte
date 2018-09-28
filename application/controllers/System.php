@@ -118,14 +118,11 @@ class System extends CI_Controller {
         $veiculos = $this->Veiculos_model->get();
         $disponivel = $this->Transportes_model->verifica($date);
         $vec_dp = $this->Transportes_model->verificaVeiculos($veiculos, $date);
-        
-        
-        
-        if($disponivel == true){
-            $json = array('result' => true, 'message' => 'Já existe viagem neste dia!', 'v1' => $vec_dp);
+        if(count($vec_dp) == 0){
+            $json = array('result' => false, 'message' => 'Não existem veículos disponíveis nesta data!');
             echo json_encode($json);
         }else{
-            $json = array('result' => false, 'message' => $date . $disponivel, 'v1' => $vec_dp);
+            $json = array('result' => true, 'message' => '', 'veiculos' => $vec_dp);
             echo json_encode($json);
         }
 

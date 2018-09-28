@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="pt-br"> 
 <head>
 <meta charset='utf-8' />
+<title>Sistema Transporte</title>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/css/bootstrap/bootstrap.css">
 <link href='<?php echo base_url()?>assets/css/style.css' rel='stylesheet' />
 <link href='<?php echo base_url()?>assets/css/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
@@ -47,28 +48,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               success: function(data)
               {
               var select = document.getElementById('veiculo');
-              for(var i = 0; i <= select.length; i++){
-                select.remove(i);
-              }
-              if(!data.v1.length == 0){
-                data.v1.forEach(function(element, index){
-                var opt = document.createElement('option');
-                opt.value = element.id_veiculo;
-                opt.innerHTML = element.nome_veiculo;
-                select.appendChild(opt);
-                });
-              }
-              
+              var veiculos = data.veiculos;
+                
               if(data.result == false){
-                $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
-                $('#requisitaTransporte').modal('show');
-                console.log(data.v1);
+                alert(data.message);
               }
               else{
+                if(!veiculos.length == 0){
+                select.options.length = 0;
+                veiculos.forEach(function(element, index){
+                    var opt = document.createElement('option');
+                    opt.value = element.id_veiculo;
+                    opt.innerHTML = element.nome_veiculo;
+                    select.appendChild(opt);
+                  });
+                }else{
+                  select.options.length = 0;
+                  var veiculos_obj = Object.values(veiculos);
+                  veiculos_obj.forEach(function(element){
+                    var opt = document.createElement('option');
+                    opt.value = element.id_veiculo;
+                    opt.innerHTML = element.nome_veiculo;
+                    select.appendChild(opt);
+                  });
+                }
+
+
                 $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
                 $('#requisitaTransporte').modal('show');
-                console.log(data.v1);
+                
               }
+
+
+              
+              
+              
             }
           });
         //});
