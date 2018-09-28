@@ -46,12 +46,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               dataType: 'json',
               success: function(data)
               {
+              var select = document.getElementById('veiculo');
+              for(var i = 0; i <= select.length; i++){
+                select.remove(i);
+              }
+              if(!data.v1.length == 0){
+                data.v1.forEach(function(element, index){
+                var opt = document.createElement('option');
+                opt.value = element.id_veiculo;
+                opt.innerHTML = element.nome_veiculo;
+                select.appendChild(opt);
+                });
+              }
+              
               if(data.result == false){
                 $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
                 $('#requisitaTransporte').modal('show');
+                console.log(data.v1);
               }
               else{
-                  alert(data.message);
+                $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
+                $('#requisitaTransporte').modal('show');
+                console.log(data.v1);
               }
             }
           });
@@ -161,11 +177,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="form-group">
               <label for="veiculo">Veículo</label>
               <select class="form-control" id="veiculo" name="veiculo">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option> 
-                <option>5</option>
               </select>
             </div>
           </form>
