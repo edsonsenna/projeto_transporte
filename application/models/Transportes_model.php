@@ -39,6 +39,14 @@ class Transportes_model extends CI_Model {
         return $veiculos;
     }
 
+    function verificaMotoristas($motoristas, $date){
+        $query = $this->db->query(" SELECT * FROM `transporte` WHERE data_transporte_chegada >= DATE_SUB('{$date}', INTERVAL 8 HOUR);");
+        foreach($query->result() as $result){
+            unset($motoristas[($result->motorista_transporte)-1]);
+        }
+        return $motoristas;
+    }
+
 
 
 

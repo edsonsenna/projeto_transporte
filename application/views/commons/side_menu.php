@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							  <i class="fa fa-car fa-lg"></i> Serviços <span class="arrow"></span>
 							</li>
 							<ul class="sub-menu collapse" id="servServicos">
-								<a href="<?php echo base_url()?>index.php/System/requisitar_transporte"><li>Requisitar Transporte</li></a>
+								<a href="<?php echo base_url()?>index.php/Transporte/requisitar_transporte"><li>Requisitar Transporte</li></a>
 								<a href="<?php echo base_url()?>index.php/System/requisitar_viagem"><li>Requisitar Viagem</li></a>
 								<a href="<?php echo base_url()?>index.php/System/gerar_relatorio"><li>Gerar relatório</li></a>
 							</ul>

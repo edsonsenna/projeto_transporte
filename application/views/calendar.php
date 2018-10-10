@@ -21,16 +21,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(document).ready(function() {
 
     $('#calendar').fullCalendar({
-      customButtons: {
+      /**customButtons: {
         requisitarTransporte: {
           text: 'Nova Requisição',
           click: function() {
             $('#requisitaTransporte').modal('show');
           }
         }
-      },
+      },*/
       header: {
-        left: 'prev,next today requisitarTransporte',
+        left: 'prev,next today',
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
@@ -42,47 +42,84 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          // $(document).ready(function(){
             $.ajax({
               type: "POST",
-              url: "<?php echo base_url();?>index.php/system/verifica_disponibilidade?ajax=true",
+              url: "<?php echo base_url();?>index.php/Transporte/verifica_disponibilidade_veiculo?ajax=true",
               data: {data: date.format('YYYY-MM-DD')},
               dataType: 'json',
               success: function(data)
               {
-              var select = document.getElementById('veiculo');
-              var veiculos = data.veiculos;
-                
-              if(data.result == false){
-                alert(data.message);
-              }
-              else{
-                if(!veiculos.length == 0){
-                select.options.length = 0;
-                veiculos.forEach(function(element, index){
-                    var opt = document.createElement('option');
-                    opt.value = element.id_veiculo;
-                    opt.innerHTML = element.nome_veiculo;
-                    select.appendChild(opt);
-                  });
-                }else{
-                  select.options.length = 0;
-                  var veiculos_obj = Object.values(veiculos);
-                  veiculos_obj.forEach(function(element){
-                    var opt = document.createElement('option');
-                    opt.value = element.id_veiculo;
-                    opt.innerHTML = element.nome_veiculo;
-                    select.appendChild(opt);
-                  });
+                var select = document.getElementById('veiculo');
+                var veiculos = data.veiculos;
+                  
+                if(data.result == false){
+                  alert(data.message);
                 }
+                else{
+                  if(!veiculos.length == 0){
+                  select.options.length = 0;
+                  veiculos.forEach(function(element, index){
+                      var opt = document.createElement('option');
+                      opt.value = element.id_veiculo;
+                      opt.innerHTML = element.nome_veiculo;
+                      select.appendChild(opt);
+                    });
+                  }else{
+                    select.options.length = 0;
+                    var veiculos_obj = Object.values(veiculos);
+                    veiculos_obj.forEach(function(element){
+                      var opt = document.createElement('option');
+                      opt.value = element.id_veiculo;
+                      opt.innerHTML = element.nome_veiculo;
+                      select.appendChild(opt);
+                    });
+                  }
+
+                  $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url();?>index.php/Transporte/verifica_disponibilidade_motorista?ajax=true",
+                    data: {data: date.format('YYYY-MM-DD')},
+                    dataType: 'json',
+                    success: function(data)
+                    {
+
+                      var select = document.getElementById('motorista');
+                      var motoristas = data.motoristas;
+
+                      if(data.result == false){
+                        alert(data.message);
+                      }
+                      else{
+                        if(!motoristas.length == 0){
+                        select.options.length = 0;
+                        motoristas.forEach(function(element, index){
+                            var opt = document.createElement('option');
+                            opt.value = element.id_motorista;
+                            opt.innerHTML = element.nome_motorista;
+                            select.appendChild(opt);
+                          });
+                        }else{
+                          select.options.length = 0;
+                          var motoristas_obj = Object.values(motoristas);
+                          motoristas_obj.forEach(function(element){
+                            var opt = document.createElement('option');
+                            opt.value = element.id_motorista;
+                            opt.innerHTML = element.nome_motorista;
+                            select.appendChild(opt);
+                          });
+                        }
 
 
-                $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
-                $('#requisitaTransporte').modal('show');
-                
-              }
+                        $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY'));
+                        document.getElementById('dia').value = date.format('YYYY-MM-DD');
+                        $('#requisitaTransporte').modal('show');
+                        
+                      }
+                    }
+                  });
 
-
-              
-              
-              
+                 // $('#requisitaTransporte #requisitaTransporteTitle').text('Requisitar Transporte - ' + date.format('DD-MM-YYYY') +' - '+ data.message);
+                  //$('#requisitaTransporte').modal('show');
+                  
+                }
             }
           });
         //});
@@ -179,7 +216,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="<?php echo base_url()?>index.php/Transporte/cria_transporte" method="POST">
+            <div class="form-row">
+              <div class="col-md-3 form-group">
+                <label for="dia">Data:</label>
+                <input type="text" class="form-control" name="dia" id="dia"/>
+              </div>
+              <div class="col-md-4 form-group control">
+                <label for="saida">Horário de Saída:</label>
+                <input type="time" class="form-control" id="saida" name="saida" value="08:00"
+                      required />
+              </div>
+              <div class="col-md-4 form-group control">
+                <label for="chegada">Horário de Chegada:</label>
+                <input type="time" class="form-control" id="chegada" name="chegada" value="12:00"
+                      required />
+              </div>
+            </div>
+            
             <div class="form-group">
               <label for="doc">Documento Requisitante</label>
               <input type="number" class="form-control" id="doc" placeholder="12344566" name="doc">
@@ -189,19 +243,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <input type="text" class="form-control" id="nome" placeholder="Fulano de Tal" name="nome">
             </div>
             <div class="form-group">
+              <label for="motorista">Motoristas</label>
+              <select class="form-control" id="motorista" name="motorista">
+              </select>
+            </div>
+            <div class="form-group">
               <label for="veiculo">Veículo</label>
               <select class="form-control" id="veiculo" name="veiculo">
               </select>
             </div>
+            <input type="submit" value="Cadastrar" class="btn btn-primary">
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <input type="submit" value="Cadastrar" class="btn btn-primary">
         </div>
       </div>
     </div>
   </div>
+
+
   
 
 </body>

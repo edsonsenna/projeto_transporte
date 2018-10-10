@@ -83,23 +83,11 @@ class System extends CI_Controller {
         die();
     }
 
-
-    public function requisitar_transporte(){
-        $this->load->model('Transportes_model');
-        $dados['transportes'] = $this->Transportes_model->get();
-        $dados['message_error'] = '';
-        $this->load->view('calendar', $dados);
-    }
-
-
-
     public function requisitar_viagem(){
-        if((!session_id() === "") || (!$this->session->userdata('logado'))){
-            redirect('System/login');
-        }
         $dados['message_error'] = '';
         //$this->load->view('viagem/requisitar_viagem');
-        $this->load->view('viagem/teste_requisitar_viagem', $dados);
+        redirect('System/testePDF');
+        //$this->load->view('viagem/teste_requisitar_viagem', $dados);
     }
 
    
@@ -110,24 +98,6 @@ class System extends CI_Controller {
     }
 
 
-    public function verifica_disponibilidade(){
-
-        $date = $this->input->post('data');
-        $this->load->model('Transportes_model');
-        $this->load->model('Veiculos_model');
-        $veiculos = $this->Veiculos_model->get();
-        $disponivel = $this->Transportes_model->verifica($date);
-        $vec_dp = $this->Transportes_model->verificaVeiculos($veiculos, $date);
-        if(count($vec_dp) == 0){
-            $json = array('result' => false, 'message' => 'Não existem veículos disponíveis nesta data!');
-            echo json_encode($json);
-        }else{
-            $json = array('result' => true, 'message' => '', 'veiculos' => $vec_dp);
-            echo json_encode($json);
-        }
-
-        
-    }
 
 
 
@@ -190,7 +160,7 @@ class System extends CI_Controller {
             $pdf->AddPage();
 
             // create some HTML content
-            $html = '<h1>Requisição de Viagem</h1><p>O usuário '. $nome .' requisita viagem para a data: '. $data.' com o carro: '. $carro .'</p>';
+            $html = '';
 
             // output the HTML content
             $pdf->writeHTML($html, true, 0, true, 0);
@@ -211,4 +181,7 @@ class System extends CI_Controller {
 	}
 }
 
+
 ?>
+
+
